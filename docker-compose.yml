@@ -1,0 +1,41 @@
+services:
+  server:
+    image: 8.133.3.7:5000/card-game-scorer/server:1.0.2
+    container_name: card-game-scorer-server
+    restart: unless-stopped
+    volumes:
+      - db-data:/app/data
+      - server-logs:/app/logs
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      HOST: 0.0.0.0
+      CLIENT_URL: "*"
+    networks:
+      - app-net
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:3000/api/health', r => process.exit(r.statusCode === 200 ? 0 : 1)).on('error', () => process.exit(1))"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+
+  client:
+    image: 8.133.3.7:5000/card-game-scorer/client:1.0.0
+    container_name: card-game-scorer-client
+    restart: unless-stopped
+    ports:
+      - "8081:80"
+    depends_on:
+      server:
+        condition: service_healthy
+    networks:
+      - app-net
+
+volumes:
+  db-data:
+  server-logs:
+
+networks:
+  app-net:
+    driver: bridge

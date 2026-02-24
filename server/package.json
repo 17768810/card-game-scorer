@@ -1,0 +1,43 @@
+{
+  "name": "card-game-scorer-server",
+  "version": "1.0.0",
+  "description": "Real-time card game scoring platform backend",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js",
+    "setup-db": "node database/init.js",
+    "test": "vitest",
+    "test:unit": "vitest run",
+    "test:watch": "vitest watch",
+    "test:coverage": "vitest run --coverage",
+    "test:integration": "vitest run --config vitest.config.js tests/integration",
+    "test:all": "npm run test:unit && npm run test:integration"
+  },
+  "keywords": [
+    "card-game",
+    "scoring",
+    "realtime",
+    "socket.io"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@fastify/cors": "^9.0.1",
+    "@fastify/static": "^7.0.1",
+    "bcrypt": "^6.0.0",
+    "better-sqlite3": "^9.4.0",
+    "dotenv": "^16.4.1",
+    "fastify": "^4.26.0",
+    "nanoid": "^5.0.5",
+    "socket.io": "^4.7.4"
+  },
+  "devDependencies": {
+    "@vitest/coverage-v8": "^4.0.18",
+    "pino-pretty": "^10.3.1",
+    "socket.io-client": "^4.8.3",
+    "supertest": "^7.2.2",
+    "vitest": "^4.0.18"
+  }
+}
